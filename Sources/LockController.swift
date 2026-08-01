@@ -40,6 +40,7 @@ final class LockController: NSObject {
     private var frontAppKey = ""
 
     func start() {
+        NSLog("[InputLock] LockController.start")
         observeFrontAppChange()
         updateFrontApp()
         let timer = Timer(timeInterval: 0.4, repeats: true) { [weak self] _ in
@@ -64,7 +65,8 @@ final class LockController: NSObject {
         guard let target = targetSourceID() else { return }
         guard input.sourceExists(sourceID: target) else { return }
         if input.currentSourceID() != target {
-            _ = input.select(sourceID: target)
+            let selected = input.select(sourceID: target)
+            NSLog("[InputLock] select source=\(target) success=\(selected) app=\(frontAppKey)")
         }
     }
 
@@ -123,6 +125,7 @@ final class LockController: NSObject {
         let key = app.bundleIdentifier ?? name
         frontAppName = name
         frontAppKey = key
+        NSLog("[InputLock] frontApp name=\(name) key=\(key)")
         onFrontAppChanged?(frontAppName, frontAppKey)
     }
 }

@@ -188,51 +188,62 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     }
 
     @objc private func selectGlobal(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=selectGlobal source=\(sender.representedObject as? String ?? "nil")")
         guard let sourceID = sender.representedObject as? String else { return }
         controller.setGlobal(sourceID: sourceID)
     }
 
     @objc private func clearGlobal(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=clearGlobal")
         controller.clearGlobal()
     }
 
     @objc private func selectForCurrentApp(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=selectForCurrentApp app=\(controller.currentFrontAppKey()) source=\(sender.representedObject as? String ?? "nil")")
         guard let sourceID = sender.representedObject as? String else { return }
         controller.setRuleForCurrentApp(sourceID: sourceID)
     }
 
     @objc private func removeCurrentAppRule(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=removeCurrentAppRule app=\(controller.currentFrontAppKey())")
         let key = controller.currentFrontAppKey()
         guard !key.isEmpty else { return }
         controller.removeRule(appKey: key)
     }
 
     @objc private func removeRule(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=removeRule key=\(sender.representedObject as? String ?? "nil")")
         guard let key = sender.representedObject as? String else { return }
         controller.removeRule(appKey: key)
     }
 
     @objc private func pause5m(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=pause5m")
         controller.pause(minutes: 5)
     }
 
     @objc private func pause30m(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=pause30m")
         controller.pause(minutes: 30)
     }
 
     @objc private func pauseForever(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=pauseForever")
         controller.pauseIndefinitely()
     }
 
     @objc private func resume(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=resume")
         controller.resume()
     }
 
     @objc private func rescan(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=rescan")
         refreshMenu()
     }
 
     @objc private func quit(_ sender: NSMenuItem) {
+        NSLog("[InputLock] action=quit")
         let alert = NSAlert()
         alert.messageText = "退出 InputLock？"
         alert.informativeText = "退出后输入法将不再被锁定。"
