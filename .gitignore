@@ -1,0 +1,20 @@
+.build/
+*.app
+.DS_Store
+
+# Swift and Xcode user-specific files
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# macOS metadata
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Editor and tool files
+.vscode/
+.idea/
+*.swp
+*.swo
