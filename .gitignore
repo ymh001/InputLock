@@ -1,5 +1,7 @@
 .build/
 .build-debug/
+.dmg-staging/
+*.dmg
 *.app
 .DS_Store
 
