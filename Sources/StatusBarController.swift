@@ -6,6 +6,7 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private let input = InputSourceManager.shared
     private let rules = AppRuleManager.shared
     private let controller = LockController.shared
+    private let autoStart = AutoStartManager.shared
     private var menuIsOpen = false
     private var needsMenuRefresh = false
 
@@ -159,6 +160,11 @@ final class StatusBarController: NSObject, NSMenuDelegate {
 
         menu.addItem(NSMenuItem.separator())
 
+        let autoStartTitle = autoStart.needsApproval ? "开机自动启动（需系统确认）" : "开机自动启动"
+        let autoStartItem = actionItem(autoStartTitle, #selector(toggleAutoStart(_:)))
+        autoStartItem.state = autoStart.isEnabled ? .on : .off
+        menu.addItem(autoStartItem)
+
         if controller.isPaused {
             menu.addItem(makeItem("恢复锁定", #selector(resume(_:))))
         } else {
@@ -240,6 +246,14 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     @objc private func rescan(_ sender: NSMenuItem) {
         NSLog("[InputLock] action=rescan")
         refreshMenu()
+    }
+
+    @objc private func toggleAutoStart(_ sender: NSMenuItem) {
+        let enabled = !autoStart.isEnabled
+        NSLog("[InputLock] action=toggleAutoStart enabled=\(enabled)")
+        if autoStart.setEnabled(enabled) {
+            refreshMenu()
+        }
     }
 
     @objc private func quit(_ sender: NSMenuItem) {

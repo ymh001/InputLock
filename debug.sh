@@ -20,6 +20,7 @@ xcrun swiftc \
   -sdk "$(xcrun --sdk macosx --show-sdk-path)" \
   -framework AppKit \
   -framework Carbon \
+  -framework ServiceManagement \
   Sources/*.swift \
   -o "$APP_DIR/Contents/MacOS/$PROJECT_NAME"
 
